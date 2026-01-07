@@ -18,7 +18,7 @@ namespace MovieApi.Application.Features.CqrsDesignPattern.Handlers.CategoryHandl
             _context = context;
         }
 
-        public async void Handle(DeleteCategoryCommand command)
+        public async Task Handle(DeleteCategoryCommand command)
         {
             var category = await _context.Categories.FindAsync(command.Id);
             _context.Categories.Remove(category);
