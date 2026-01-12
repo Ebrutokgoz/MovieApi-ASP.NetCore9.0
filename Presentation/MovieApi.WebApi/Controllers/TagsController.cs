@@ -1,0 +1,55 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using MovieApi.Application.Features.MediatorDesignPattern.Commands.TagCommands;
+using MovieApi.Application.Features.MediatorDesignPattern.Queries.TagQueries;
+
+namespace MovieApi.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TagsController : ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public TagsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        public IActionResult TagList()
+        {
+            var taglist = _mediator.Send(new GetTagQuery());
+            return Ok(taglist);
+        }
+
+        [HttpPost]
+        public IActionResult CreateTag(CreateTagCommand command)
+        {
+            _mediator.Send(command);
+            return Ok("Successfully Added");
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteTag(int id)
+        {
+            _mediator.Send(new DeleteTagCommand(id));
+            return Ok("Successfully Deleted");
+        }
+
+        [HttpPut]
+        public IActionResult UpdateTag(UpdateTagCommand command)
+        {
+            _mediator.Send(command);
+            return Ok("Successfully Updated");
+        }
+
+        [HttpGet("GetTag")]
+        public IActionResult GetTag(int id)
+        {
+            var tag = _mediator.Send(new GetTagByIdQuery(id));
+            return Ok(tag);
+        }
+
+    }
+}
