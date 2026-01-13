@@ -1,0 +1,31 @@
+﻿using MediatR;
+using MovieApi.Application.Features.MediatorDesignPattern.Queries.TagQueries;
+using MovieApi.Application.Features.MediatorDesignPattern.Results.TagResults;
+using MovieApi.Persistence.Context;
+
+namespace MovieApi.Application.Features.MediatorDesignPattern.Handlers.TagHandlers
+{
+    public class GetTagByIdQueryHandler : IRequestHandler<GetTagByIdQuery, GetTagByIdQueryResult>
+    {
+        private readonly MovieContext _context;
+
+        public GetTagByIdQueryHandler(MovieContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<GetTagByIdQueryResult> Handle(GetTagByIdQuery request, CancellationToken cancellationToken)
+        {
+            var tag = await _context.Tags.FindAsync(request.Id);
+            if (tag == null)
+            {
+                return null;
+            }
+            return new GetTagByIdQueryResult
+            {
+                Id = tag.Id,
+                Title = tag.Title
+            };
+        }
+    }
+}
