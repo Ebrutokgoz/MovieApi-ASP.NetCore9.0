@@ -17,37 +17,37 @@ namespace MovieApi.WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult TagList()
+        public async Task<IActionResult> TagList()
         {
-            var taglist = _mediator.Send(new GetTagQuery());
+            var taglist = await _mediator.Send(new GetTagQuery());
             return Ok(taglist);
         }
 
         [HttpPost]
-        public IActionResult CreateTag(CreateTagCommand command)
+        public async Task<IActionResult> CreateTag(CreateTagCommand command)
         {
-            _mediator.Send(command);
+            await _mediator.Send(command);
             return Ok("Successfully Added");
         }
 
         [HttpDelete]
-        public IActionResult DeleteTag(int id)
+        public async Task<IActionResult> DeleteTag(int id)
         {
-            _mediator.Send(new DeleteTagCommand(id));
+            await _mediator.Send(new DeleteTagCommand(id));
             return Ok("Successfully Deleted");
         }
 
         [HttpPut]
-        public IActionResult UpdateTag(UpdateTagCommand command)
+        public async Task<IActionResult> UpdateTag(UpdateTagCommand command)
         {
-            _mediator.Send(command);
+            await _mediator.Send(command);
             return Ok("Successfully Updated");
         }
 
         [HttpGet("GetTag")]
-        public IActionResult GetTag(int id)
+        public async Task<IActionResult> GetTag(int id)
         {
-            var tag = _mediator.Send(new GetTagByIdQuery(id));
+            var tag = await _mediator.Send(new GetTagByIdQuery(id));
             return Ok(tag);
         }
 
