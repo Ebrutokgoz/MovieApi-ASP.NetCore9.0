@@ -25,6 +25,7 @@ namespace MovieApi.Application.Features.MediatorDesignPattern.Handlers.CastHandl
             var castList = await _context.Casts.AsNoTracking().ToListAsync();
             return castList.Select(cast => new GetCastQueryResult
             {
+                Id = cast.Id,
                 Title = cast.Title,
                 Name = cast.Name,
                 Surname = cast.Surname,
